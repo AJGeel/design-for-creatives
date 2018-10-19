@@ -1,5 +1,6 @@
 // Arthur Geel, 19-10-2018.
 // Prototype for a dynamic quiz, to be used in the 'Goose Game' concept for Eindhoven Museum.
+// See: https://github.com/AJGeel/design-for-creatives/blob/master/EM_GooseGame_01.pde
 
 int displayWidth = 800;
 int displayHeight = 500;
