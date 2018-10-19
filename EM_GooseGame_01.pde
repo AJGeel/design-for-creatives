@@ -2,6 +2,8 @@
 // Prototype for a dynamic quiz, to be used in the 'Goose Game' concept for Eindhoven Museum.
 // See: https://github.com/AJGeel/design-for-creatives/blob/master/EM_GooseGame_01.pde
 
+/* NOTE TO SELF: remove the Futura font for when app goes in production, or replace with common system font so that other people can easily work this sketch. */
+
 int displayWidth = 800;
 int displayHeight = 500;
 int xCenter = displayWidth/2;
