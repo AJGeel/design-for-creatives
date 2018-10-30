@@ -3,16 +3,23 @@ String[] teams = {"None", "Red", "Blue"};
 int teamSelected = 0;
 int delayTime = 800;
 Boolean questionInProgress = false;
-int[] teamScores = {0, 0};
+int redScore = 0;
+int blueScore = 0;
+
+// Questions and answers taken from Pub Quiz Questions HQ: https://goo.gl/Vj4QhS 
+int quizIndex = 0;
+String[] abc = {"A", "B", "C"};
+String[] quizQuestions = {"Which planet spins fastest?", "Who was the Greek goddess of Love and Beauty?", "Which English striker scored six goals at the 2018 World Cup?"};
+String[][] quizAnswers = { {"Earth", "Jupiter", "Mars"}, {"Apollo", "Athena", "Aphrodite"}, {"Harry Kane", "Wayne Rooney", "Emile Heskey"}};
+int[] rightAnswer = {1, 2, 0};
+int userAnswer = -1;
 
 void setup() {
   size(640, 360);
-  background(0);
-  println("Welcome to Goose Game V0. Please use your token to sign in.");
-  
-  //println("Team red's score: " + teamScores[0]);
-  
-
+  clearScreen();
+  noStroke();
+  rectMode(CENTER);
+  println("Welcome to Goose Game Version 0.01 — Please use your token to sign in.");
 }
 
 void draw() {
@@ -20,44 +27,117 @@ void draw() {
 }
 
 void keyPressed() {
-  if (key == '1') {
-    if (teamSelected < teams.length-1) {
-      teamSelected += 1;
-    } else {
-      teamSelected = 0;
-    }
-    //println(teamSelected);
-    println("Token recognized. Selected team: " + teams[teamSelected]);
-  } else if (key == '2') {
-    if (teamSelected != 0) {
-       println("");
-       println("Question: 'What is the name word for an anxiety that appears when one sees an empty beer glass?'");
-       questionInProgress = true;
-       delay(delayTime);
-       println("A: 'Nomophobia'"); delay(delayTime);
-       println("B: 'Cenosillicaphobia'"); delay(delayTime);
-       println("C: 'Phobophobia'");
-    } else {
-      println("No team has been selected. Therefore, I won't give you a question.");
-    }
-    
-  } else if (key == 'a' || key == 'b' || key == 'c'){
-    if (questionInProgress == true) {
-      println("");
-      if (key == 'a' || key == 'c'){
-        println("WRONG ANSWER.");
-      } else {
-        println("CORRECT! One point to " + teams[teamSelected]);
-        teamScores[teamSelected] += 1;
-        delay(delayTime);
-        println("Team " + teams[teamSelected] + "'s score: " + teamScores[teamSelected]);
-        questionInProgress = false;
-      }
-    } else {
-      println("No question is currently open. Press '2' to summon a new question.");
-    }
+  if (key == '2') {
+    // Prints the questions and answers of the qurrent quiz index
+    printQuizQuestions();
+  } else if (key == '1') {
+    // Simulates token behaviour: use this to cycle through the different teams
+    selectTeam();
+  } else if (key == 'a' || key == 'b' || key == 'c') {
+    if (key == 'a') {
+      userAnswer = 0;
+    } else if (key == 'b') {
+      userAnswer = 1;
+    } else if (key == 'c') {
+      userAnswer = 2;
+    } 
+    checkAnswer();
   } else {
-  
-  println("--DEBUG-- Another key has been pressed: '" + key + "'");
+    println("--DEBUG-- Another key has been pressed: '" + key + "'");
   }
+}
+
+void clearScreen() {
+  background(0);
+}
+
+void selectTeam() {
+  if (teamSelected < teams.length-1) {
+    teamSelected += 1;
+  } else {
+    teamSelected = 0;
+  }
+  if (teamSelected == 0) {
+    println("You have successfully logged off.");
+    println("");
+    background(0);
+  } else {
+    println("Token recognized. Selected team: " + teams[teamSelected]);
+    drawTeamSquare();
+  }
+}
+
+void drawTeamSquare() {
+  if (teamSelected == 1) {
+    fill(255, 0, 0);
+  } else if (teamSelected == 2) {
+    fill(0, 0, 255);
+  }
+  rect(640/2, 360/2, 50, 50);
+}
+
+void updateQuizIndex() {
+  if (quizIndex < quizQuestions.length-1) {
+    quizIndex += 1;
+  } else {
+    println("That's all we have today! Thanks for playing.");
+    delay(delayTime*10);
+    quizIndex = 0;
+  }
+}
+
+void printQuizQuestions() { 
+  if (teamSelected == 0) {
+    println("No team selected. Please log in before you summon a question.");
+  } else {
+    println(quizQuestions[quizIndex]);
+    delay(delayTime);
+    for (int i=0; i < quizAnswers[0].length; i++) {
+      println(abc[i] + ": " + quizAnswers[quizIndex][i]);
+      delay(delayTime);
+      questionInProgress = true;
+    }
+  }
+}
+
+void checkAnswer() {
+  if (questionInProgress) {
+    println("");
+    if (userAnswer == rightAnswer[quizIndex]) {
+      println("You answered '" + key + "'. CORRECT! One point to " + teams[teamSelected]);
+      delay(delayTime);
+      awardPoints();
+      delay(delayTime);
+      
+      updateQuizIndex();
+      delay(delayTime);
+      println("");
+
+      printQuizQuestions();
+    } else {
+      // don't give points
+      println("You answered '" + key + "'. Unfortunately, that's wrong. Try again.");
+    }
+  }
+}
+
+void awardPoints() {
+  if (teamSelected == 1) {
+    redScore += 1;
+    println("Red Team's score: " + redScore);
+  } else if (teamSelected == 2) {
+    blueScore += 1;
+    println("Blue Team's score: " + blueScore);
+  }
+  
+  updateScoreOnScreen();
+}
+
+void updateScoreOnScreen() {
+  clearScreen();
+  drawTeamSquare();
+  fill(255,0,0);
+  text("Team Red: " + redScore, 10, 30);
+  fill(0,0,255);
+  text("Team Blue: " + blueScore, 10, 50);
 }
