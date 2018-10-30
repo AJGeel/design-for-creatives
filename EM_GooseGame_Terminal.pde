@@ -4,8 +4,6 @@ int teamSelected = 0;
 int delayTime = 800;
 Boolean questionInProgress = false;
 int[] teamScores = {0, 0};
-//int teamRedScore = 0;
-//int teamBlueScore = 0;
 
 void setup() {
   size(640, 360);
@@ -56,9 +54,8 @@ void keyPressed() {
         questionInProgress = false;
       }
     } else {
-      println("No question is currently open. Press '2' to summon a question.");
+      println("No question is currently open. Press '2' to summon a new question.");
     }
-    //println("A, B or C has been pressed.");
   } else {
   
   println("--DEBUG-- Another key has been pressed: '" + key + "'");
