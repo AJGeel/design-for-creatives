@@ -1,6 +1,10 @@
 # Design for Creatives
 
-PROJECT: DESIGN FOR THE “MUSEUM IN THE CITY” OF EINDHOVEN MUSEUM
+## Project 'Museum in the City'
+
+> Timeframe: Sept. '18 — Feb. '19
+> Client: Eindhoven Museum
+> Type: Design Project (10 ECTS)
 
 ![Museum Impression](https://images.unsplash.com/photo-1515169273894-7e876dcf13da?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cb3bb8b0e3d3d7bc61e782d41ee4562f&auto=format&fit=crop&w=1950&q=80)
 
