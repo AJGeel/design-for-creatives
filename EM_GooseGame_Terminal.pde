@@ -1,4 +1,3 @@
-int rectWidth;
 String[] teams = {"None", "Red", "Blue"};
 int teamSelected = 0;
 int delayTime = 800;
