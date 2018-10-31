@@ -8,9 +8,9 @@ int blueScore = 0;
 // Questions and answers taken from Pub Quiz Questions HQ: https://goo.gl/Vj4QhS 
 int quizIndex = 0;
 String[] abc = {"A", "B", "C"};
-String[] quizQuestions = {"Which planet spins fastest?", "Who was the Greek goddess of Love and Beauty?", "Which English striker scored six goals at the 2018 World Cup?"};
-String[][] quizAnswers = { {"Earth", "Jupiter", "Mars"}, {"Apollo", "Athena", "Aphrodite"}, {"Harry Kane", "Wayne Rooney", "Emile Heskey"}};
-int[] rightAnswer = {1, 2, 0};
+String[] quizQuestions = {"Which planet spins fastest?", "Who was the Greek goddess of Love and Beauty?", "Which English striker scored six goals at the 2018 World Cup?", "What open-source computer operating system is Linus Torvalds known for?", "Which of the following defines the term 'raster'?", "The human eye is first drawn to which area?", "Which color space is the most appropriate for full color printing?"};
+String[][] quizAnswers = { {"Earth", "Jupiter", "Mars"}, {"Apollo", "Athena", "Aphrodite"}, {"Harry Kane", "Wayne Rooney", "Emile Heskey"}, {"Ubuntu", "Linux", "Android"}, {"A graphic with infinite scalability", "A file with limited colours", "A grid of X and Y coordinates on a display space" }, {"Top left", "Centre", "Bottom left"}, {"Black/White", "RGB", "CMYK"} };
+int[] rightAnswer = {1, 2, 0, 1, 2, 0, 2};
 int userAnswer = -1;
 
 void setup() {
@@ -26,12 +26,13 @@ void draw() {
 }
 
 void keyPressed() {
-  if (key == '2') {
-    // Prints the questions and answers of the qurrent quiz index
-    printQuizQuestions();
-  } else if (key == '1') {
+  if (key == '1') {
     // Simulates token behaviour: use this to cycle through the different teams
     selectTeam();
+    updateScoreOnScreen();
+  } else if (key == '2') {
+    // Prints the questions and answers of the qurrent quiz index
+    printQuizQuestions();
   } else if (key == 'a' || key == 'b' || key == 'c') {
     if (key == 'a') {
       userAnswer = 0;
@@ -72,7 +73,8 @@ void drawTeamSquare() {
   } else if (teamSelected == 2) {
     fill(0, 0, 255);
   }
-  rect(640/2, 360/2, 50, 50);
+  rect(width/2, height/2, 50, 50);
+  rect(width/2, height/2, 10, 10);
 }
 
 void updateQuizIndex() {
@@ -107,7 +109,7 @@ void checkAnswer() {
       delay(delayTime);
       awardPoints();
       delay(delayTime);
-      
+
       updateQuizIndex();
       delay(delayTime);
       println("");
@@ -128,15 +130,17 @@ void awardPoints() {
     blueScore += 1;
     println("Blue Team's score: " + blueScore);
   }
-  
+
   updateScoreOnScreen();
 }
 
 void updateScoreOnScreen() {
   clearScreen();
-  drawTeamSquare();
-  fill(255,0,0);
-  text("Team Red: " + redScore, 10, 30);
-  fill(0,0,255);
-  text("Team Blue: " + blueScore, 10, 50);
+  if (teamSelected != 0) {
+    drawTeamSquare();
+    fill(255, 0, 0);
+    text("Team Red: " + redScore, 10, 30);
+    fill(0, 0, 255);
+    text("Team Blue: " + blueScore, 10, 50);
+  }
 }
