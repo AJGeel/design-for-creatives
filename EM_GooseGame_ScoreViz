@@ -1,5 +1,10 @@
+// Arthur Geel, 02-11-2018.
+// Dynamic score visualisation based on trigonometric functions. To be used in the 'Goose Game' concept for Eindhoven Museum.
+// Trigonometric functions are inspired by the work of A. Miller: https://goo.gl/kjftAa
 // 
-// Inspired by https://goo.gl/kjftAa
+// Instructions: press 'UP' and 'DOWN' to change the Red Team's Score
+//               press 'LEFT' and 'RIGHT' to change the Blue Team's Score
+//               press 'A' and 'E' to change the animation speed
 
 int RED_SCORE = 10;
 int BLUE_SCORE = 10;
@@ -13,6 +18,7 @@ void setup() {
   fullScreen();
   noCursor();
   textAlign(CENTER);
+  strokeCap(ROUND);
 }
 
 void draw() {
@@ -28,16 +34,16 @@ void draw() {
     stroke(255, 60+i*3, 60+i*5);
     line(x1(t + i), y1(t + i), x2(t + i), y2(t + i));
   }
-  
+
   redTeamScoreText();  
-  
+
   translate(2*width/4, 0);
   for (int i = 0; i < BLUE_SCORE; i++) {
     strokeWeight(2+i/5);
     stroke(60+i*5, 60+i*3, 255);
     line(x3(t + i), y3(t + i), x4(t + i), y4(t + i));
   }
-  
+
   blueTeamScoreText();
 
   t += deltaT;
@@ -90,7 +96,7 @@ void keyPressed() {
       if (BLUE_SCORE > 0) {
         BLUE_SCORE -= 1;
       }
-    } 
+    }
   } else if (key == 'a') {
     deltaT += .1;
   } else if (key == 's') {
@@ -104,7 +110,7 @@ void redTeamScoreText() {
   text("Red Team:", 0, 200);
   textSize(16);
   fill(255, 60, 60);
-  text(RED_SCORE, 0, 225); 
+  text(RED_SCORE, 0, 225);
 }
 
 void blueTeamScoreText() {
@@ -113,5 +119,5 @@ void blueTeamScoreText() {
   text("Blue Team:", 0, 200);
   textSize(16);
   fill(60, 60, 255);
-  text(BLUE_SCORE, 0, 225); 
+  text(BLUE_SCORE, 0, 225);
 }
